@@ -16,6 +16,7 @@ export class TogglingLightAccessory implements AccessoryPlugin {
   private readonly signalID: string = this.config.signalID
   private readonly numToOn: number = this.config.numToOn
   private readonly numToOff: number = this.config.numToOff
+  private readonly waitSeconds: number = this.config.waitSeconds
 
   private readonly baseURL = 'https://api.nature.global'
 
@@ -58,8 +59,11 @@ export class TogglingLightAccessory implements AccessoryPlugin {
 
     try {
       for await (const response of requests) {
-        const responseMessage = await response.text()
-        this.logger(responseMessage)
+        await response.text()
+        this.logger('send a signal')
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.waitSeconds * 1000)
+        )
       }
     } catch (e) {
       if (e instanceof Error) {

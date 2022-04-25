@@ -54,7 +54,6 @@ export class TogglingLightAccessory implements AccessoryPlugin {
     const url = new URL(`/1/signals/${this.signalID}/send`, this.baseURL)
     const headers = { Authorization: `Bearer ${this.accessToken}` }
 
-    this.logger(`value: ${nextState}`)
     const numOfLoop = nextState ? this.numToOn : this.numToOff
 
     try {

@@ -53,17 +53,14 @@ export class TogglingLightAccessory implements AccessoryPlugin {
 
     const numOfLoop = this.switchState.isOn ? this.numToOff : this.numToOn
 
-    const requests = [...Array(numOfLoop)].map((_) =>
-      fetch(url.toString(), { method: 'POST', headers })
-    )
-
     try {
-      for await (const response of requests) {
+      for await (const _ of [...Array(numOfLoop)]) {
+        const response = await fetch(url.toString(), { method: 'POST', headers })
         await response.text()
         this.logger('send a signal')
-        await new Promise((resolve) =>
-          setTimeout(resolve, this.waitSeconds * 1000)
-        )
+        // await new Promise((resolve) =>
+        //   setTimeout(resolve, this.waitSeconds * 1000)
+        // )
       }
     } catch (e) {
       if (e instanceof Error) {

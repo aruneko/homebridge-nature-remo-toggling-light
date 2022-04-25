@@ -36,17 +36,17 @@ export class TogglingLightAccessory implements AccessoryPlugin {
 
     lightBulb
       .getCharacteristic(this.Characteristic.On)
-      .on('get', this.getOnCharacteristicHandler.bind(this))
-      .on('set', this.setOnCharacteristicHandler.bind(this))
+      .onGet(this.getOnCharacteristicHandler.bind(this))
+      .onSet(this.setOnCharacteristicHandler.bind(this))
 
     return [informationService, lightBulb]
   }
 
-  private async getOnCharacteristicHandler() {
+  private async getOnCharacteristicHandler(): Promise<boolean> {
     return this.switchState.isOn
   }
 
-  private async setOnCharacteristicHandler() {
+  private async setOnCharacteristicHandler(): Promise<void> {
     const url = new URL(`/1/signals/${this.signalID}/send`, this.baseURL)
     const headers = { Authorization: `Bearer ${this.accessToken}` }
 

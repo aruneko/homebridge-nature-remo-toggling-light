@@ -1,5 +1,5 @@
 export class SwitchState {
-  constructor(private state = false) {}
+  constructor(private state: boolean = false) {}
 
   public get isOn() {
     return this.state

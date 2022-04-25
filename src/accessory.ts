@@ -28,7 +28,9 @@ export class TogglingLightAccessory implements AccessoryPlugin {
     private readonly logger: Logging,
     private readonly config: AccessoryConfig,
     private readonly api: API
-  ) {
+  ) {}
+
+  public getServices(): Service[] {
     this.informationService
       .setCharacteristic(this.Characteristic.Manufacturer, 'Nature, Inc.')
       .setCharacteristic(this.Characteristic.Model, 'NatureRemo')
@@ -38,9 +40,7 @@ export class TogglingLightAccessory implements AccessoryPlugin {
       .getCharacteristic(this.Characteristic.On)
       .onGet(this.getOnCharacteristicHandler)
       .onSet((value) => this.setOnCharacteristicHandler(value as boolean))
-  }
 
-  public getServices(): Service[] {
     return [this.informationService, this.lightBulb]
   }
 

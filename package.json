@@ -1,6 +1,6 @@
 {
   "name": "homebridge-nature-repo-toggling-light",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Homebridge plugin for nature remo to control a toggling light",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

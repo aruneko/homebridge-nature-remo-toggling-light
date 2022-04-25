@@ -12,9 +12,6 @@ export class TogglingLightAccessory implements AccessoryPlugin {
   private readonly Service = this.api.hap.Service
   private readonly Characteristic = this.api.hap.Characteristic
 
-  private readonly informationService = new this.Service.AccessoryInformation()
-  private readonly lightBulb = new this.Service.Lightbulb(this.config.name)
-
   private readonly accessToken: string = this.config.accessToken
   private readonly signalID: string = this.config.signalID
   private readonly numToOn: number = this.config.numToOn
@@ -31,17 +28,19 @@ export class TogglingLightAccessory implements AccessoryPlugin {
   ) {}
 
   public getServices(): Service[] {
-    this.informationService
+    const informationService = new this.Service.AccessoryInformation()
+    informationService
       .setCharacteristic(this.Characteristic.Manufacturer, 'Nature, Inc.')
       .setCharacteristic(this.Characteristic.Model, 'NatureRemo')
       .setCharacteristic(this.Characteristic.SerialNumber, 'nature-remo')
 
-    this.lightBulb
+    const lightBulb = new this.Service.Lightbulb(this.config.name)
+    lightBulb
       .getCharacteristic(this.Characteristic.On)
       .onGet(this.getOnCharacteristicHandler)
       .onSet((value) => this.setOnCharacteristicHandler(value as boolean))
 
-    return [this.informationService, this.lightBulb]
+    return [informationService, lightBulb]
   }
 
   private async getOnCharacteristicHandler(): Promise<boolean> {

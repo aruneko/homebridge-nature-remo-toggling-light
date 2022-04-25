@@ -6,7 +6,7 @@ import {
   Service,
 } from 'homebridge'
 import fetch from 'node-fetch'
-import { SwitchState } from './switchState'
+import { SwitchState } from './switchState.js'
 
 export class TogglingLightAccessory implements AccessoryPlugin {
   private readonly Service = this.api.hap.Service

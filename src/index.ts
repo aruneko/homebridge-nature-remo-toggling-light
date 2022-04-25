@@ -1,7 +1,7 @@
 import { API } from 'homebridge'
-import { TogglingLightAccessory } from './accessory'
-import { ACCESSORY_NAME } from './constsnts'
+import { TogglingLightAccessory } from './accessory.js'
+import { ACCESSORY_IDENTIFIER, ACCESSORY_NAME } from './constsnts.js'
 
 export = (api: API) => {
-  api.registerAccessory(ACCESSORY_NAME, TogglingLightAccessory)
+  api.registerAccessory(ACCESSORY_IDENTIFIER, ACCESSORY_NAME, TogglingLightAccessory)
 }

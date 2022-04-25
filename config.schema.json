@@ -1,0 +1,31 @@
+{
+  "pluginAlias": "HomebridgeNatureRemoTogglingLightPlugin",
+  "pluginType": "accessory",
+  "singular": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "accessToken": {
+        "title": "Accessory Name",
+        "type": "string",
+        "format": "string",
+        "minLength": 1,
+        "required": true
+      },
+      "signalID": {
+        "type": "string",
+        "format": "string",
+        "minLength": 1,
+        "required": true
+      },
+      "numToOn": {
+        "type": "number",
+        "required": true
+      },
+      "numToOff": {
+        "type": "number",
+        "required": true
+      }
+    }
+  }
+}

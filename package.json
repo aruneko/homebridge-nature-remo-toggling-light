@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-nature-repo-toggling-light",
+  "name": "homebridge-nature-remo-toggling-light",
   "version": "1.0.10",
   "description": "Homebridge plugin for nature remo to control a toggling light",
   "main": "dist/index.js",
@@ -7,7 +7,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/aruneko/homebridge-nature-repo-toggling-light.git",
+  "repository": "https://github.com/aruneko/homebridge-nature-remo-toggling-light.git",
   "author": "Aruneko <aruneko99@gmail.com>",
   "license": "MIT",
   "scripts": {

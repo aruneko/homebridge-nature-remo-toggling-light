@@ -36,8 +36,8 @@ export class TogglingLightAccessory implements AccessoryPlugin {
 
     lightBulb
       .getCharacteristic(this.Characteristic.On)
-      .onGet(this.getOnCharacteristicHandler.bind(this))
-      .onSet(this.setOnCharacteristicHandler.bind(this))
+      .onGet(this.getOnCharacteristicHandler)
+      .onSet((value) => this.setOnCharacteristicHandler(value as boolean))
 
     return [informationService, lightBulb]
   }
@@ -46,11 +46,11 @@ export class TogglingLightAccessory implements AccessoryPlugin {
     return this.switchState.isOn
   }
 
-  private async setOnCharacteristicHandler(): Promise<void> {
+  private async setOnCharacteristicHandler(nextState: boolean): Promise<void> {
     const url = new URL(`/1/signals/${this.signalID}/send`, this.baseURL)
     const headers = { Authorization: `Bearer ${this.accessToken}` }
 
-    const numOfLoop = this.switchState.isOn ? this.numToOff : this.numToOn
+    const numOfLoop = nextState ? this.numToOn : this.numToOff
 
     try {
       for await (const _ of [...Array(numOfLoop)]) {
@@ -61,10 +61,12 @@ export class TogglingLightAccessory implements AccessoryPlugin {
         await response.text()
         this.logger('send a signal')
       }
-      if (this.switchState.isOn) {
-        this.switchState.setOffState()
-      } else {
+      if (nextState) {
         this.switchState.setOnState()
+        this.logger('turned on')
+      } else {
+        this.switchState.setOffState()
+        this.logger('turned off')
       }
     } catch (e) {
       if (e instanceof Error) {

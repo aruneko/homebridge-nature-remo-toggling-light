@@ -16,7 +16,6 @@ export class TogglingLightAccessory implements AccessoryPlugin {
   private readonly signalID: string = this.config.signalID
   private readonly numToOn: number = this.config.numToOn
   private readonly numToOff: number = this.config.numToOff
-  private readonly waitSeconds: number = this.config.waitSeconds
 
   private readonly baseURL = 'https://api.nature.global'
 
@@ -55,12 +54,17 @@ export class TogglingLightAccessory implements AccessoryPlugin {
 
     try {
       for await (const _ of [...Array(numOfLoop)]) {
-        const response = await fetch(url.toString(), { method: 'POST', headers })
+        const response = await fetch(url.toString(), {
+          method: 'POST',
+          headers,
+        })
         await response.text()
         this.logger('send a signal')
-        // await new Promise((resolve) =>
-        //   setTimeout(resolve, this.waitSeconds * 1000)
-        // )
+      }
+      if (this.switchState.isOn) {
+        this.switchState.setOffState()
+      } else {
+        this.switchState.setOnState()
       }
     } catch (e) {
       if (e instanceof Error) {
